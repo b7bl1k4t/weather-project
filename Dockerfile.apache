@@ -3,18 +3,7 @@ FROM php:8.1-apache
 # Устанавливаем зависимости для PostgreSQL
 RUN apt-get update && apt-get install -y \
     libpq-dev \
-    postgresql-client \
     && docker-php-ext-install pdo pdo_pgsql
-
-# Включаем модули Apache для аутентификации через БД
-RUN a2enmod authn_dbd dbd
-
-# Для PostgreSQL нужно использовать mod_authn_dbd с правильным драйвером
-RUN apt-get install -y libaprutil1-dbd-pgsql
-
-# Добавляем конфигурацию БД для PostgreSQL
-RUN echo 'DBDriver pgsql' >> /etc/apache2/apache2.conf
-RUN echo 'DBDParams "host=postgres dbname=weather_db user=weather_user pass=weather_pass"' >> /etc/apache2/apache2.conf
 
 EXPOSE 80
 CMD ["apache2-foreground"]

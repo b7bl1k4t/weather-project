@@ -47,6 +47,13 @@ body {
     padding: 30px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     transition: transform 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.weather-card .btn {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
 }
 
 .weather-card:hover {
@@ -316,9 +323,8 @@ body {
     }
 }
 
-/* Обнови отступы контейнера чтобы учесть меню */
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 40px 20px 20px; /* увеличил верхний отступ */
+    padding: 40px 20px 20px; 
 }

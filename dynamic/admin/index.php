@@ -41,7 +41,7 @@ if (!isset($_SESSION['admin'])) {
 
         <div class="weather-card">
             <h2>Управление данными</h2>
-            <p><a href="/index.php" class="btn">Управление погодой</a></p>
+            <a href="/index.php" class="btn">Управление погодой</a>
         </div>
 
         <div class="weather-card">
