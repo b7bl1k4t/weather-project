@@ -34,7 +34,7 @@ services:
       POSTGRES_USER: weather_user
       POSTGRES_PASSWORD: weather_pass
     volumes:
-      - ./postgres/data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
       - ./postgres/init:/docker-entrypoint-initdb.d
     networks:
       - weather_network
@@ -42,3 +42,7 @@ services:
 networks:
   weather_network:
     driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local
