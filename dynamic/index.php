@@ -238,6 +238,42 @@ $windUnit = $preferences['language'] === 'ru' ? 'м/с' : 'm/s';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo e($strings['page_title']); ?></title>
     <link rel="stylesheet" href="/css/style.css">
+    <?php if ($flash): ?>
+    <style>
+        .flash-message {
+            position: fixed;
+            top: 90px;
+            right: 20px;
+            min-width: 260px;
+            max-width: 320px;
+            background: #f0fff4;
+            border-left: 6px solid #2ed573;
+            padding: 16px 22px;
+            border-radius: 16px;
+            color: #1b4332;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.2);
+            z-index: 2000;
+            opacity: 0;
+            transform: translate3d(0, -20px, 0);
+            animation: flash-in 0.35s ease forwards;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .flash-message.flash-error {
+            background: #fff5f5;
+            border-left-color: #ff7675;
+            color: #5c0a0a;
+        }
+        .flash-message.flash-hidden {
+            opacity: 0;
+            transform: translate3d(0, -15px, 0);
+            pointer-events: none;
+        }
+        @keyframes flash-in {
+            from { opacity: 0; transform: translate3d(0,-20px,0); }
+            to { opacity: 1; transform: translate3d(0,0,0); }
+        }
+    </style>
+    <?php endif; ?>
 </head>
 <body class="theme-<?php echo e($preferences['theme']); ?>" data-language="<?php echo e($preferences['language']); ?>">
     <nav class="main-nav">

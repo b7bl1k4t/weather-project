@@ -1,15 +1,27 @@
 <?php
-// Подключение к PostgreSQL
+declare(strict_types=1);
+
+require_once __DIR__ . '/bootstrap.php';
+
 $host = 'postgres';
 $dbname = 'weather_db';
 $username = 'weather_user';
 $password = 'weather_pass';
 
+$redirectWithFlash = static function (string $type, string $message): void {
+    $_SESSION['flash'] = [
+        'type' => $type,
+        'message' => $message,
+    ];
+    header('Location: /index.php');
+    exit;
+};
+
 try {
     $pdo = new PDO("pgsql:host=$host;dbname=$dbname", $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch(PDOException $e) {
-    die("Ошибка подключения: " . $e->getMessage());
+} catch (PDOException $e) {
+    $redirectWithFlash('error', 'Ошибка подключения к БД: ' . $e->getMessage());
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -21,19 +33,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $icon = trim($_POST['icon'] ?? '');
 
     if ($temperature === false || $temperature < -99.99 || $temperature > 99.99) {
-        die('Температура должна быть в диапазоне от -99.99 до 99.99.');
+        $redirectWithFlash('error', 'Температура должна быть в диапазоне от -99.99 до 99.99.');
     }
     if ($humidity === false || $humidity < 0 || $humidity > 100) {
-        die('Влажность должна быть от 0 до 100.');
+        $redirectWithFlash('error', 'Влажность должна быть от 0 до 100.');
     }
     if ($pressure === false || $pressure < 0 || $pressure > 2000) {
-        die('Давление должно быть положительным и реалистичным.');
+        $redirectWithFlash('error', 'Давление должно быть положительным и реалистичным.');
     }
     if ($wind_speed === false || $wind_speed < 0 || $wind_speed > 99.99) {
-        die('Скорость ветра должна быть в диапазоне от 0 до 99.99.');
+        $redirectWithFlash('error', 'Скорость ветра должна быть в диапазоне от 0 до 99.99.');
     }
     if ($description === '' || $icon === '') {
-        die('Описание и иконка обязательны.');
+        $redirectWithFlash('error', 'Описание и иконка обязательны.');
     }
     
     $stmt = $pdo->prepare("INSERT INTO weather_data (temperature, humidity, pressure, wind_speed, description, icon) VALUES (?, ?, ?, ?, ?, ?)");
@@ -46,7 +58,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $icon
     ]);
     
-    header('Location: /index.php');
-    exit;
+    $redirectWithFlash('success', 'Данные о погоде добавлены.');
 }
-?>
