@@ -1,44 +1,89 @@
-version: '3.8'
+x-laravel-env: &laravel-env
+  APP_ENV: local
+  APP_DEBUG: "true"
+  APP_URL: http://localhost
+  LOG_CHANNEL: stack
+  DB_CONNECTION: pgsql
+  DB_HOST: postgres
+  DB_PORT: "5432"
+  DB_DATABASE: weather_db
+  DB_USERNAME: weather_user
+  DB_PASSWORD: weather_pass
+  CACHE_DRIVER: file
+  SESSION_DRIVER: file
+  QUEUE_CONNECTION: database
+
+x-laravel-service: &laravel-service
+  build:
+    context: .
+    dockerfile: Dockerfile.php
+  working_dir: /var/www/html
+  volumes:
+    - ./laravel:/var/www/html
+  environment:
+    <<: *laravel-env
+  depends_on:
+    postgres:
+      condition: service_healthy
+  networks:
+    - weather_network
 
 services:
   nginx:
-    image: nginx:latest
+    image: nginx:1.25
     container_name: nginx_proxy
     ports:
       - "80:80"
-      - "443:443"
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./nginx/conf.d:/etc/nginx/conf.d
-      - ./static:/var/www/static
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./laravel:/var/www/html:ro
     depends_on:
-      - apache
+      - php
     networks:
       - weather_network
 
-  apache:
-    build:
-      context: .
-      dockerfile: Dockerfile.apache
-    volumes:
-      - ./dynamic:/var/www/html
-    networks:
-      - weather_network
-    depends_on:
-      - postgres
+  php:
+    <<: *laravel-service
+    container_name: weather_php
+
+  queue:
+    <<: *laravel-service
+    container_name: weather_queue
+    command: >
+      sh -c "php artisan queue:work --verbose --tries=3 --timeout=90"
+    restart: unless-stopped
+    profiles: ["workers"]
+
+  scheduler:
+    <<: *laravel-service
+    container_name: weather_scheduler
+    command: >
+      sh -c "php artisan schedule:work"
+    restart: unless-stopped
+    profiles: ["workers"]
 
   postgres:
     image: postgres:13
+    container_name: weather_postgres
     environment:
       POSTGRES_DB: weather_db
       POSTGRES_USER: weather_user
       POSTGRES_PASSWORD: weather_pass
     volumes:
-      - ./postgres/data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
       - ./postgres/init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U weather_user -d weather_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     networks:
       - weather_network
 
 networks:
   weather_network:
     driver: bridge
+
+volumes:
+  postgres_data:
