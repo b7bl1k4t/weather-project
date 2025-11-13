@@ -1,9 +1,12 @@
 FROM php:8.1-apache
 
-# Устанавливаем зависимости для PostgreSQL
+# Устанавливаем зависимости для PostgreSQL и Redis
 RUN apt-get update && apt-get install -y \
     libpq-dev \
-    && docker-php-ext-install pdo pdo_pgsql
+    && docker-php-ext-install pdo pdo_pgsql \
+    && pecl install redis \
+    && docker-php-ext-enable redis \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 EXPOSE 80
 CMD ["apache2-foreground"]
