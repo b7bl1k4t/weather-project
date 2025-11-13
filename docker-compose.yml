@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   nginx:
     image: nginx:latest
@@ -11,21 +9,25 @@ services:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./nginx/conf.d:/etc/nginx/conf.d
       - ./static:/var/www/static
+      - ./dynamic:/var/www/html
     depends_on:
-      - apache
+      - php
     networks:
       - weather_network
 
-  apache:
+  php:
     build:
       context: .
-      dockerfile: Dockerfile.apache
+      dockerfile: Dockerfile.php-fpm
+    env_file:
+      - .env
     volumes:
       - ./dynamic:/var/www/html
     networks:
       - weather_network
     depends_on:
       - postgres
+      - redis
 
   postgres:
     image: postgres:13
@@ -34,11 +36,26 @@ services:
       POSTGRES_USER: weather_user
       POSTGRES_PASSWORD: weather_pass
     volumes:
-      - ./postgres/data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
       - ./postgres/init:/docker-entrypoint-initdb.d
+    networks:
+      - weather_network
+
+  redis:
+    image: redis:7-alpine
+    container_name: weather_redis
+    command: ["redis-server", "--save", "60", "1"]
+    volumes:
+      - redis_data:/data
     networks:
       - weather_network
 
 networks:
   weather_network:
     driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local

@@ -25,29 +25,29 @@
     <div class="container">
         <div class="header">
             <h1>📊 О проекте</h1>
-            <p>Информация о нашей метеорологической системе</p>
+            <p>Краткое описание технологического стека и возможностей сервиса</p>
         </div>
 
         <div class="weather-card">
             <h2>О нашей системе</h2>
-            <p>Это современная система мониторинга погоды, разработанная с использованием передовых технологий:</p>
+            <p>Проект развернут в Docker Compose и состоит из нескольких контейнеров, поэтому легко переносится между средами:</p>
             
             <div class="weather-details">
                 <div class="detail-item">
-                    <div class="detail-label">Серверная архитектура</div>
-                    <div class="detail-value">Nginx + Apache</div>
+                    <div class="detail-label">Балансировка + веб</div>
+                    <div class="detail-value">Nginx → Apache (PHP 8.1)</div>
                 </div>
                 <div class="detail-item">
                     <div class="detail-label">База данных</div>
-                    <div class="detail-value">Postgres</div>
+                    <div class="detail-value">PostgreSQL 13</div>
                 </div>
                 <div class="detail-item">
-                    <div class="detail-label">Backend</div>
-                    <div class="detail-value">PHP 8.1</div>
+                    <div class="detail-label">API</div>
+                    <div class="detail-value">REST (weather + users)</div>
                 </div>
                 <div class="detail-item">
                     <div class="detail-label">Frontend</div>
-                    <div class="detail-value">HTML5 + CSS3 + JS</div>
+                    <div class="detail-value">HTML5 / CSS3 / Vanilla JS</div>
                 </div>
             </div>
         </div>
@@ -55,12 +55,12 @@
         <div class="weather-card">
             <h2>Особенности</h2>
             <ul style="list-style: none; line-height: 2;">
-                <li>✅ Реальное время обновления данных</li>
+                <li>✅ Тестируемое REST API (Postman коллекции)</li>
                 <li>✅ Прогноз на 5 дней</li>
-                <li>✅ Данные по множеству городов</li>
-                <li>✅ Административная панель</li>
+                <li>✅ Управление данными через админ-панель</li>
+                <li>✅ Доступ к списку пользователей API</li>
+                <li>✅ Адаптивный интерфейс без сторонних фреймворков</li>
                 <li>✅ Адаптивный дизайн</li>
-                <li>✅ Высокая производительность</li>
             </ul>
         </div>
     </div>
