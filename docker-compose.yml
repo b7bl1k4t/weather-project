@@ -9,7 +9,7 @@ services:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./nginx/conf.d:/etc/nginx/conf.d
       - ./static:/var/www/static
-      - ./dynamic:/var/www/html
+      - ./laravel-app:/var/www/html
     depends_on:
       - php
     networks:
@@ -20,9 +20,9 @@ services:
       context: .
       dockerfile: Dockerfile.php-fpm
     env_file:
-      - .env
+      - ./laravel-app/.env
     volumes:
-      - ./dynamic:/var/www/html
+      - ./laravel-app:/var/www/html
     networks:
       - weather_network
     depends_on:
