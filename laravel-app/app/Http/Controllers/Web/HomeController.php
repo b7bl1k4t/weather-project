@@ -5,13 +5,15 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Models\Upload;
 use App\Models\WeatherRecord;
+use App\Support\UiSettings;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     public function __invoke(Request $request)
     {
-        $preferences = $this->resolvePreferences($request);
+        $preferences = UiSettings::preferences($request);
+        $strings = UiSettings::translations('home');
 
         $latest = WeatherRecord::query()
             ->orderByDesc('created_at')
@@ -28,42 +30,20 @@ class HomeController extends Controller
 
         return view('home', [
             'preferences' => $preferences,
+            'strings' => $strings,
             'latest' => $latest,
             'history' => $history,
             'uploads' => $uploads,
+            'themeNames' => [
+                'light' => ['ru' => 'Светлая', 'en' => 'Light', 'es' => 'Clara'],
+                'dark' => ['ru' => 'Тёмная', 'en' => 'Dark', 'es' => 'Oscura'],
+                'contrast' => ['ru' => 'Контрастная', 'en' => 'High contrast', 'es' => 'Alto contraste'],
+            ],
+            'languageOptions' => [
+                'ru' => 'Русский',
+                'en' => 'English',
+                'es' => 'Español',
+            ],
         ]);
-    }
-
-    private function resolvePreferences(Request $request): array
-    {
-        $allowedThemes = ['light', 'dark', 'contrast'];
-        $allowedLanguages = ['ru', 'en', 'es'];
-
-        $preferences = [
-            'login' => 'Гость',
-            'theme' => 'light',
-            'language' => 'ru',
-        ];
-
-        $sessionPrefs = $request->session()->get('preferences', []);
-        if (is_array($sessionPrefs)) {
-            $preferences = array_merge($preferences, array_intersect_key($sessionPrefs, $preferences));
-        }
-
-        $cookieLogin = trim((string) $request->cookie('weather_login', ''));
-        $cookieTheme = trim((string) $request->cookie('weather_theme', ''));
-        $cookieLanguage = trim((string) $request->cookie('weather_language', ''));
-
-        if ($cookieLogin !== '') {
-            $preferences['login'] = $cookieLogin;
-        }
-        if (in_array($cookieTheme, $allowedThemes, true)) {
-            $preferences['theme'] = $cookieTheme;
-        }
-        if (in_array($cookieLanguage, $allowedLanguages, true)) {
-            $preferences['language'] = $cookieLanguage;
-        }
-
-        return $preferences;
     }
 }

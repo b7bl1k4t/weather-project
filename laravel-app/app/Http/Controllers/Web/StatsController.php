@@ -5,12 +5,16 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Models\WeatherRecord;
 use App\Services\Fixtures\WeatherFixtureSeeder;
+use App\Support\UiSettings;
 use Illuminate\Support\Facades\DB;
 
 class StatsController extends Controller
 {
     public function __invoke(WeatherFixtureSeeder $seeder)
     {
+        $preferences = UiSettings::preferences(request());
+        $strings = UiSettings::translations('stats');
+
         $autofilled = 0;
         $count = 0;
         $lastRecord = null;
@@ -26,6 +30,8 @@ class StatsController extends Controller
                 'autofilled' => 0,
                 'count' => 0,
                 'lastRecord' => null,
+                'preferences' => $preferences,
+                'strings' => $strings,
             ]);
         }
 
@@ -34,6 +40,8 @@ class StatsController extends Controller
             'autofilled' => $autofilled,
             'count' => $count,
             'lastRecord' => $lastRecord,
+            'preferences' => $preferences,
+            'strings' => $strings,
         ]);
     }
 }

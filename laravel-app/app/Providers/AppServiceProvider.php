@@ -19,6 +19,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        $compiled = env('VIEW_COMPILED_PATH');
+        if ($compiled && !is_dir($compiled)) {
+            @mkdir($compiled, 0777, true);
+        }
     }
 }
