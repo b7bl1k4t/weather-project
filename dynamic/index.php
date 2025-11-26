@@ -77,6 +77,7 @@ $translations = [
         'nav_home' => 'Главная',
         'nav_about' => 'О проекте',
         'nav_dynamic' => 'Динамика',
+        'nav_stats' => 'Статистика',
         'nav_admin' => 'Админка',
         'hero_title' => '🌤️ Прогноз Погоды',
         'hero_subtitle' => 'Динамические данные из базы данных',
@@ -122,6 +123,7 @@ $translations = [
         'nav_home' => 'Home',
         'nav_about' => 'About',
         'nav_dynamic' => 'Dynamic',
+        'nav_stats' => 'Stats',
         'nav_admin' => 'Admin',
         'hero_title' => '🌤️ Weather Forecast',
         'hero_subtitle' => 'Dynamic data from the database',
@@ -167,6 +169,7 @@ $translations = [
         'nav_home' => 'Inicio',
         'nav_about' => 'Sobre el proyecto',
         'nav_dynamic' => 'Dinámica',
+        'nav_stats' => 'Estadísticas',
         'nav_admin' => 'Panel',
         'hero_title' => '🌤️ Pronóstico del tiempo',
         'hero_subtitle' => 'Datos dinámicos de la base de datos',
@@ -285,6 +288,7 @@ $windUnit = $preferences['language'] === 'ru' ? 'м/с' : 'm/s';
                 <li><a href="/index.html" class="nav-link"><?php echo e($strings['nav_home']); ?></a></li>
                 <li><a href="/about.html" class="nav-link"><?php echo e($strings['nav_about']); ?></a></li>
                 <li><a href="/index.php" class="nav-link active"><?php echo e($strings['nav_dynamic']); ?></a></li>
+                <li><a href="/stats.php" class="nav-link"><?php echo e($strings['nav_stats']); ?></a></li>
                 <li><a href="/admin/" class="nav-link"><?php echo e($strings['nav_admin']); ?></a></li>
             </ul>
         </div>

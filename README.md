@@ -51,6 +51,7 @@ docker compose up --build
 - Динамическая страница: `http://localhost/index.php`
 - Админка: `http://localhost/admin/`  
   Логин/пароль — значения из `.env` (`admin` / `password` по умолчанию).
+- Статистика с графиками: `http://localhost/stats.php`.
 - API: `http://localhost/api/weather.php`, `http://localhost/api/users.php` (подробности в `docs/api-spec.md`).
 
 ## Управление
@@ -73,6 +74,7 @@ docker compose up --build
 - Проверяйте, что Postgres и Redis поднялись (`docker compose ps`). Если `php` не стартует, смотрите логи `docker compose logs php`.
 - При изменении конфигов Nginx перезапускайте только веб‑контейнер: `docker compose restart nginx`.
 - Чтобы сбросить данные и заново применить `postgres/init/01-init.sql`, выполните `docker compose down -v && docker compose up --build`.
+- PHP-зависимости (Faker, JpGraph) ставятся через Composer: `cd dynamic && composer install` (vendor каталог монтируется в `php-fpm`).
 
 ## Полезные заметки
 

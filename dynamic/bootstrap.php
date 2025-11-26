@@ -1,6 +1,11 @@
 <?php
 declare(strict_types=1);
 
+$autoload = __DIR__ . '/vendor/autoload.php';
+if (file_exists($autoload)) {
+    require_once $autoload;
+}
+
 $redisHost = getenv('REDIS_HOST') ?: 'redis';
 $redisPort = getenv('REDIS_PORT') ?: '6379';
 

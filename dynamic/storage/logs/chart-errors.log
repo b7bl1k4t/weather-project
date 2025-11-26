@@ -1,0 +1,28 @@
+[2025-11-26T16:11:50+00:00] Ошибка генерации графика: Unknown format specifier ")"
+#0 /var/www/html/vendor/amenadiel/jpgraph/src/plot/PiePlot.php(379): sprintf('\xD0\x9F\xD0\xB5\xD1\x80\xD0\xB5\xD0\xBC\xD0\xB5\xD0\xBD\xD0...', 18.75)
+#1 /var/www/html/vendor/amenadiel/jpgraph/src/graph/PieGraph.php(234): Amenadiel\JpGraph\Plot\PiePlot->Legend(Object(Amenadiel\JpGraph\Graph\PieGraph))
+#2 /var/www/html/src/Charts/WeatherChartGenerator.php(124): Amenadiel\JpGraph\Graph\PieGraph->Stroke('/var/www/html/s...')
+#3 /var/www/html/chart.php(24): App\Charts\WeatherChartGenerator->generateMonthlyConditions()
+#4 {main}
+
+[2025-11-26T16:11:58+00:00] Ошибка генерации графика: Unknown format specifier ")"
+#0 /var/www/html/vendor/amenadiel/jpgraph/src/plot/PiePlot.php(379): sprintf('\xD0\x9F\xD0\xB5\xD1\x80\xD0\xB5\xD0\xBC\xD0\xB5\xD0\xBD\xD0...', 18.75)
+#1 /var/www/html/vendor/amenadiel/jpgraph/src/graph/PieGraph.php(234): Amenadiel\JpGraph\Plot\PiePlot->Legend(Object(Amenadiel\JpGraph\Graph\PieGraph))
+#2 /var/www/html/src/Charts/WeatherChartGenerator.php(124): Amenadiel\JpGraph\Graph\PieGraph->Stroke('/var/www/html/s...')
+#3 /var/www/html/chart.php(24): App\Charts\WeatherChartGenerator->generateMonthlyConditions()
+#4 {main}
+
+[2025-11-26T16:12:01+00:00] Ошибка генерации графика: Unknown format specifier ")"
+#0 /var/www/html/vendor/amenadiel/jpgraph/src/plot/PiePlot.php(379): sprintf('\xD0\x9F\xD0\xB5\xD1\x80\xD0\xB5\xD0\xBC\xD0\xB5\xD0\xBD\xD0...', 18.75)
+#1 /var/www/html/vendor/amenadiel/jpgraph/src/graph/PieGraph.php(234): Amenadiel\JpGraph\Plot\PiePlot->Legend(Object(Amenadiel\JpGraph\Graph\PieGraph))
+#2 /var/www/html/src/Charts/WeatherChartGenerator.php(124): Amenadiel\JpGraph\Graph\PieGraph->Stroke('/var/www/html/s...')
+#3 /var/www/html/chart.php(24): App\Charts\WeatherChartGenerator->generateMonthlyConditions()
+#4 {main}
+
+[2025-11-26T16:12:12+00:00] Ошибка генерации графика: Unknown format specifier ")"
+#0 /var/www/html/vendor/amenadiel/jpgraph/src/plot/PiePlot.php(379): sprintf('\xD0\x9F\xD0\xB5\xD1\x80\xD0\xB5\xD0\xBC\xD0\xB5\xD0\xBD\xD0...', 18.75)
+#1 /var/www/html/vendor/amenadiel/jpgraph/src/graph/PieGraph.php(234): Amenadiel\JpGraph\Plot\PiePlot->Legend(Object(Amenadiel\JpGraph\Graph\PieGraph))
+#2 /var/www/html/src/Charts/WeatherChartGenerator.php(124): Amenadiel\JpGraph\Graph\PieGraph->Stroke('/var/www/html/s...')
+#3 /var/www/html/chart.php(24): App\Charts\WeatherChartGenerator->generateMonthlyConditions()
+#4 {main}
+
